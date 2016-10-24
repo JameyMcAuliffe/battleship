@@ -2,6 +2,10 @@
 
 angular
 	.module('battleship', [])
-	.controller('main', function($scope) {
-		$scope.title = 'Battleship'
+	.controller('main', function($scope, $http) {
+		$http
+			.get('/api/title')
+			.then(({ data: { title }}) => 
+				$scope.title = title
+			)
 	})
