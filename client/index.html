@@ -4,15 +4,16 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>Battleship</title>
-	<link rel="stylesheet" href="">
+	<link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css">
 </head>
 <body>
-	<div ng-app="battleship">
-		<div ng-controller="main">
-			<h1>{{title}}</h1>
+	<div class="container">
+		<div ng-app="battleship">
+			<div ng-view></div>
 		</div>
 	</div>
 	<script src="/lib/angular/angular.min.js"></script>
+	<script src="/lib/angular-route/angular-route.min.js"></script>
 	<script src="/app/main.js"></script>
 </body>
 </html>
