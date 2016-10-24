@@ -1,7 +1,14 @@
 'use strict'
 
 angular
-	.module('battleship', [])
+	.module('battleship', ['ngRoute'])
+	.config($routeProvider => 
+		$routeProvider
+			.when('/', {
+				controller: 'main',
+				templateUrl: 'partials/main.html'
+			})
+	)
 	.controller('main', function($scope, $http) {
 		$http
 			.get('/api/title')
