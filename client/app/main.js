@@ -5,11 +5,19 @@ angular
 	.config($routeProvider => 
 		$routeProvider
 			.when('/', {
-				controller: 'main',
+				controller: 'MainCtrl',
 				templateUrl: 'partials/main.html'
 			})
+			.when('/login', {
+				controller: 'MainCtrl',
+				templateUrl: 'partials/login.html'
+			})
+			.when('/register', {
+				controller: 'MainCtrl',
+				templateUrl: 'partials/register.html'
+			})
 	)
-	.controller('main', function($scope, $http) {
+	.controller('MainCtrl', function($scope, $http) {
 		$http
 			.get('/api/title')
 			.then(({ data: { title }}) => 
