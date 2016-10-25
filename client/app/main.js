@@ -9,7 +9,7 @@ angular
 				templateUrl: 'partials/main.html'
 			})
 			.when('/login', {
-				controller: 'MainCtrl',
+				controller: 'LoginCtrl',
 				templateUrl: 'partials/login.html'
 			})
 			.when('/register', {
@@ -23,4 +23,12 @@ angular
 			.then(({ data: { title }}) => 
 				$scope.title = title
 			)
+	})
+	.controller('LoginCtrl', function($scope, $http) {
+		$http
+			.get('/api/title')
+			.then(({ data: { title }}) => 
+				$scope.title = title
+			)
+		
 	})
