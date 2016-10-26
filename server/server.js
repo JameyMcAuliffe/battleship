@@ -7,6 +7,8 @@ const mongoose = require('mongoose')
 const { json } = require('body-parser')
 const socketio = require('socket.io')
 
+const User = require('../models/user')
+
 //initialize app into express
 const app = express()
 
@@ -24,11 +26,6 @@ app.use(json())
 
 app.get('/api/title', (req, res) => {
 	res.json({title: 'Battleship'})
-})
-
-const User = mongoose.model('user', {
-	email: String,
-	password: String
 })
 
 //using es6 promises as promise library
