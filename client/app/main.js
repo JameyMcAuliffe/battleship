@@ -13,43 +13,42 @@ angular
 				templateUrl: 'partials/main.html'
 			})
 			.when('/login', {
-				controller: 'MainCtrl',
+				controller: 'UserCtrl',
 				templateUrl: 'partials/login.html'
 			})
 			.when('/register', {
-				controller: 'RegisterCtrl',
+				controller: 'UserCtrl',
 				templateUrl: 'partials/register.html'
 			})
 	)
 	.controller('MainCtrl', function($scope, $http) {
-		$http
-			.get('/api/title')
-			.then(({ data: { title }}) => 
-				$scope.title = title
-			)
+		// $http
+		// 	.get('/api/title')
+		// 	.then(({ data: { title }}) => 
+		// 		$scope.title = title
+		// 	)
 	})
-	.controller('RegisterCtrl', function($scope, $http) {
-		$http
-			.get('/api/title')
-			.then(({ data: { title }}) => 
-				$scope.title = title
-			)
-
+	.controller('UserCtrl', function($scope, $http) {
+		// $http
+		// 	.get('/api/title')
+		// 	.then(({ data: { title }}) => 
+		// 		$scope.title = title
+		// 	)
 		$scope.registerUser = () => {
 			const user = {
 				email: $scope.email,
 				password: $scope.password
 			}
-
 			if (socket.connected) {
 				return socket.emit('registerUser', user)
 			}
-
 			$http.post('/api/users', user)
 			.then(() => {
 				$scope.users.push(user)
 			})
-			.catch(console.error)		
+			.catch(console.error)	
 		}
-		
+		$scope.loginUser = () => {
+
+		}	
 	})
