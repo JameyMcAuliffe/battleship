@@ -1,5 +1,7 @@
 'use strict'
 
+
+//const User = require('../../server/models/user')
 const socket = io()
 socket.on('connect', () => console.log(`Socket connected: ${socket.id}`))
 socket.on('disconnect', () => console.log('Socket disconnected'))
@@ -13,11 +15,11 @@ angular
 				templateUrl: 'partials/main.html'
 			})
 			.when('/login', {
-				controller: 'UserCtrl',
+				controller: 'LoginCtrl',
 				templateUrl: 'partials/login.html'
 			})
 			.when('/register', {
-				controller: 'UserCtrl',
+				controller: 'RegisterCtrl',
 				templateUrl: 'partials/register.html'
 			})
 	)
@@ -28,7 +30,7 @@ angular
 		// 		$scope.title = title
 		// 	)
 	})
-	.controller('UserCtrl', function($scope, $http) {
+	.controller('RegisterCtrl', function($scope, $http) {
 		// $http
 		// 	.get('/api/title')
 		// 	.then(({ data: { title }}) => 
@@ -47,8 +49,17 @@ angular
 				$scope.users.push(user)
 			})
 			.catch(console.error)	
-		}
-		$scope.loginUser = () => {
-
 		}	
 	})
+	.controller('LoginCtrl', function($scope, $http) {
+		$scope.loginUser = () => {
+			const user = {
+				email: $scope.email,
+				password: $scope.password
+			}
+		}
+	})
+
+
+
+
