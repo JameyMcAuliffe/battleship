@@ -6,6 +6,7 @@ const mongoose = require('mongoose')
 const { json } = require('body-parser')
 const socketio = require('socket.io')
 const User = require('./models/user')
+//const { Game } = require('./models/gameBoard')
 const app = express()
 const server = Server(app)
 const io = socketio(server)
@@ -41,4 +42,32 @@ io.on('connection', socket => {
 		.catch(console.error)
 	})
 })
+
+
+const Game = mongoose.model('game', {
+	board: {
+		type: [
+			[String, String, String],
+			[String, String, String],
+			[String, String, String]
+		],
+		default: [
+			['', '', ''],
+			['', '', ''],
+			['', '', '']
+		]
+	}
+})
+
+Game.create({}).then(game => console.log("game", game));
+
+// const emitBoard = (gameObj) => {
+// 	//sends to sockets on front end
+// 	io.emit('update board', gameObj.board)
+// 	return gameObj
+// }
+
+
+
+
 
