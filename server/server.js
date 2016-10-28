@@ -6,7 +6,7 @@ const mongoose = require('mongoose')
 const { json } = require('body-parser')
 const socketio = require('socket.io')
 const User = require('./models/user')
-//const { Game } = require('./models/gameBoard')
+const Game = require('./models/gameBoard')
 const app = express()
 const server = Server(app)
 const io = socketio(server)
@@ -21,6 +21,12 @@ app.use(json())
 // app.get('/api/title', (req, res) => {
 // 	res.json({title: 'Battleship'})
 // })
+
+// app.get('/battle', (req, res) => {
+// 	Game.create({})
+// 		.then( game => res.redirect(`/battle/${game._id}`));
+// })
+
 
 //using es6 promises as promise library
 mongoose.Promise = Promise
@@ -43,23 +49,18 @@ io.on('connection', socket => {
 	})
 })
 
+const emitBoard = (gameObj) => {
+	//sends to sockets on front end
+	io.emit('update board', gameObj.board)
+	return gameObj
+}
 
-const Game = mongoose.model('game', {
-	board: {
-		type: [
-			[String, String, String],
-			[String, String, String],
-			[String, String, String]
-		],
-		default: [
-			['', '', ''],
-			['', '', ''],
-			['', '', '']
-		]
-	}
-})
+Game.create({})
+	.then(game => emitBoard(game))
 
-Game.create({}).then(game => console.log("game", game));
+//Game.create({}).then(game => console.log("game", game));
+
+
 
 // const emitBoard = (gameObj) => {
 // 	//sends to sockets on front end

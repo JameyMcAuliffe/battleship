@@ -1,11 +1,11 @@
 'use strict'
 
 
-//const User = require('../../server/models/user')
-const socket = io()
+
+// const socket = io()
 //const User = require('../../server/models/user')
 
-angular
+const battleship = angular
 	.module('battleship', ['ngRoute'])
 	.config($routeProvider => 
 		$routeProvider
@@ -26,10 +26,12 @@ angular
 				templateUrl: 'partials/battle.html'
 			})
 	)
-	.controller('MainCtrl', function($scope, $http) {
+	const socket = io()
+
+	battleship.controller('MainCtrl', function($scope, $http) {
 		
 	})
-	.controller('RegisterCtrl', function($scope, $http, $location) {
+	battleship.controller('RegisterCtrl', function($scope, $http, $location) {
 		$scope.registerUser = () => {
 			const user = {
 				email: $scope.email,
@@ -45,7 +47,7 @@ angular
 			.catch(console.error)	
 		}	
 	})
-	.controller('LoginCtrl', function($scope, $http, $location) {
+	battleship.controller('LoginCtrl', function($scope, $http, $location) {
 		$scope.loginUser = () => {
 			const user = {
 				email: $scope.email,
@@ -53,16 +55,19 @@ angular
 			}		
 		}
 	})
-	.controller('BattleCtrl', function($scope, $http) {
-		const board = document.querySelector('.board')
+	battleship.controller('BattleCtrl', function($scope, $http) {
+		const board_1 = document.querySelector('.board_1')
+		const board_2 = document.querySelector('.board_2')
 		const boardState = [
 			['', '', ''],
 			['', '', ''],
 			['', '', '']
 		]
 
+		//const boardState
+
 		const drawBoard = b => {
-			board.innerHTML = `
+			board_1.innerHTML = `
 				<table>
 					<tr>
 						<td>${b[0][0]}</td>
@@ -81,6 +86,25 @@ angular
 					</tr>
 				</table
 			`
+			// board_2.innerHTML = `
+			// 	<table>
+			// 		<tr>
+			// 			<td>${b[0][0]}</td>
+			// 			<td>${b[0][1]}</td>
+			// 			<td>${b[0][2]}</td>
+			// 		</tr>
+			// 		<tr>
+			// 			<td>${b[1][0]}</td>
+			// 			<td>${b[1][1]}</td>
+			// 			<td>${b[1][2]}</td>
+			// 		</tr>
+			// 		<tr>
+			// 			<td>${b[2][0]}</td>
+			// 			<td>${b[2][1]}</td>
+			// 			<td>${b[2][2]}</td>
+			// 		</tr>
+			// 	</table
+			// `
 		}
 		drawBoard(boardState)
 	})

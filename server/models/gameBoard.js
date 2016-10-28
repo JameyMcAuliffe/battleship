@@ -11,7 +11,7 @@ module.exports = mongoose.model('game', {
 		],
 		default: [
 			['', '', ''],
-			['', '', ''],
+			['', 'X', 'X'],
 			['', '', '']
 		]
 	}
