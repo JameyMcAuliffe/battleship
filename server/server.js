@@ -40,6 +40,8 @@ mongoose.connect(MONGODB_URL, () => {
 //Listens to Port for changes
 io.on('connection', socket => {
 	console.log(`Socket connected: ${socket.id}`)
+	Game.create({})
+	.then(game => emitBoard(game))
 	socket.on('disconnect', () => console.log(`Socket disconnected: ${socket.id}`))
 	socket.on('registerUser', user => {
 		User
@@ -55,8 +57,8 @@ const emitBoard = (gameObj) => {
 	return gameObj
 }
 
-Game.create({})
-	.then(game => emitBoard(game))
+// Game.create({})
+// 	.then(game => emitBoard(game))
 
 //Game.create({}).then(game => console.log("game", game));
 

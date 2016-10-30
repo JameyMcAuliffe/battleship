@@ -55,14 +55,39 @@ const battleship = angular
 			}		
 		}
 	})
-	battleship.controller('BattleCtrl', function($scope, $http) {
+
+	battleship.factory('socket', function ($rootScope) {
+  const socket = io.connect();
+  return {
+    on: function (eventName, callback) {
+      socket.on(eventName, function () {  
+        let args = arguments;
+        $rootScope.$apply(function () {
+          callback.apply(socket, args);
+        });
+      });
+    },
+    emit: function (eventName, data, callback) {
+      socket.emit(eventName, data, function () {
+        let args = arguments;
+        $rootScope.$apply(function () {
+          if (callback) {
+            callback.apply(socket, args);
+          }
+        });
+      })
+    }
+  };
+});
+
+	battleship.controller('BattleCtrl', function($scope, $http, socket) {
 		const board_1 = document.querySelector('.board_1')
 		const board_2 = document.querySelector('.board_2')
-		const boardState = [
-			['', '', ''],
-			['', '', ''],
-			['', '', '']
-		]
+		// const boardState = [
+		// 	['', '', ''],
+		// 	['', '', ''],
+		// 	['', '', '']
+		// ]
 
 		//const boardState
 
@@ -106,12 +131,18 @@ const battleship = angular
 			// 	</table
 			// `
 		}
-		drawBoard(boardState)
+		socket.on('update board', function (gameBoard) {
+			$scope.boardState = gameBoard
+			console.log("gb", $scope.boardState)
+			drawBoard($scope.boardState)
+		})
+
+		//drawBoard(boardState)
 	})
 
 socket.on('connect', () => console.log(`Socket connected: ${socket.id}`))
 socket.on('disconnect', () => console.log('Socket disconnected'))
-socket.on('update board', gameBoard => drawBoard(gameBoard))
+// socket.on('update board', gameBoard => drawBoard(gameBoard))
 
 
 
