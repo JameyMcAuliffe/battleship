@@ -3,8 +3,11 @@
 const mongoose = require('mongoose')
 
 module.exports = mongoose.model('ship', {
-	ship: {
-		name: String,
-		size: Number
-	}	
+	ships:
+		[
+			{
+				name: String,
+				size: Number
+			}
+		]
 })

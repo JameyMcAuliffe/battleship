@@ -61,8 +61,35 @@ const emitBoard = (gameObj) => {
 	return gameObj
 }
 
+const createShips = () => {
+	Ships.create({
+		ships: [
+			{
+				name: 'Carrier',
+				size: 5
+			},
+			{
+				name: 'Battleship',
+				size: 4
+			},
+			{
+				name: 'Submarine',
+				size: 3
+			},
+			{
+				name: 'Cruiser',
+				size: 3
+			},
+			{
+				name: 'Destroyer',
+				size: 2
+			}
+		]
+	})
+}
 
-const shipsArray = []
+createShips()
+
 
 
 
