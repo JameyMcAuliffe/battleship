@@ -52,6 +52,7 @@ io.on('connection', socket => {
 		Game.create({})
 			//.then(Ship.create({}))
 			.then(game => emitBoard(game))
+			.then(createShips())
 	})
 })
 
@@ -88,7 +89,7 @@ const createShips = () => {
 	})
 }
 
-createShips()
+
 
 
 
