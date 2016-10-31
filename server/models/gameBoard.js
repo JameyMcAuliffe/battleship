@@ -31,13 +31,3 @@ module.exports = mongoose.model('game', {
 	}
 })
 
-// [String, String, String, String, String, String, String, String, String, String],
-// 		[String, String, String, String, String, String, String, String, String, String],
-// 		[String, String, String, String, String, String, String, String, String, String],
-// 		[String, String, String, String, String, String, String, String, String, String],
-// 		[String, String, String, String, String, String, String, String, String, String],
-// 		[String, String, String, String, String, String, String, String, String, String],
-// 		[String, String, String, String, String, String, String, String, String, String],
-// 		[String, String, String, String, String, String, String, String, String, String],
-// 		[String, String, String, String, String, String, String, String, String, String],
-// 		[String, String, String, String, String, String, String, String, String, String]

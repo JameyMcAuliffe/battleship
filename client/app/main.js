@@ -28,9 +28,37 @@ const battleship = angular
 	)
 	const socket = io()
 
+	/****************** Factories *****************/
+	battleship.factory('socket', function ($rootScope) {
+  const socket = io.connect();
+  return {
+    on: function (eventName, callback) {
+      socket.on(eventName, function () {  
+        let args = arguments;
+        $rootScope.$apply(function () {
+          callback.apply(socket, args);
+        });
+      });
+    },
+    emit: function (eventName, data, callback) {
+      socket.emit(eventName, data, function () {
+        let args = arguments;
+        $rootScope.$apply(function () {
+          if (callback) {
+            callback.apply(socket, args);
+          }
+        });
+      })
+    }
+  };
+});
+
+	/****************** Controllers *****************/
+
 	battleship.controller('MainCtrl', function($scope, $http) {
 		
 	})
+
 	battleship.controller('RegisterCtrl', function($scope, $http, $location) {
 		$scope.registerUser = () => {
 			const user = {
@@ -56,33 +84,9 @@ const battleship = angular
 		}
 	})
 
-	battleship.factory('socket', function ($rootScope) {
-  const socket = io.connect();
-  return {
-    on: function (eventName, callback) {
-      socket.on(eventName, function () {  
-        let args = arguments;
-        $rootScope.$apply(function () {
-          callback.apply(socket, args);
-        });
-      });
-    },
-    emit: function (eventName, data, callback) {
-      socket.emit(eventName, data, function () {
-        let args = arguments;
-        $rootScope.$apply(function () {
-          if (callback) {
-            callback.apply(socket, args);
-          }
-        });
-      })
-    }
-  };
-});
-
 	battleship.controller('BattleCtrl', function($scope, $http, socket) {
 		const board_1 = document.querySelector('.board_1')
-		const board_2 = document.querySelector('.board_2')
+		//const board_2 = document.querySelector('.board_2')
 
 		const drawBoard = b => {
 			board_1.innerHTML = `
@@ -209,38 +213,44 @@ const battleship = angular
 					</tr>
 				</table
 			`
-			// board_2.innerHTML = `
-			// 	<table>
-			// 		<tr>
-			// 			<td>${b[0][0]}</td>
-			// 			<td>${b[0][1]}</td>
-			// 			<td>${b[0][2]}</td>
-			// 		</tr>
-			// 		<tr>
-			// 			<td>${b[1][0]}</td>
-			// 			<td>${b[1][1]}</td>
-			// 			<td>${b[1][2]}</td>
-			// 		</tr>
-			// 		<tr>
-			// 			<td>${b[2][0]}</td>
-			// 			<td>${b[2][1]}</td>
-			// 			<td>${b[2][2]}</td>
-			// 		</tr>
-			// 	</table
-			// `
 		}
+
+		$scope.fireMissile = () => {
+			board_1.addEventListener('click', evt => {
+			  let col = evt.target.parentNode.cellIndex
+			  let row = evt.target.closest('tr').rowIndex
+			  console.log("clicked on row: ", row);
+			  console.log("clicked on col: ", col);
+			  //socket.emit('check whack', { row, col })
+			})
+		}
+
+		// board_1.addEventListener('click', evt => {
+		//   const col = evt.target.parentNode.cellIndex
+		//   const row = evt.target.closest('tr').rowIndex
+		//   console.log("clicked on row: ", row);
+		//   console.log("clicked on col: ", col);
+		//   //socket.emit('check whack', { row, col })
+		// })
+
+		$scope.startGame = (gameBoard) => {
+			socket.emit('startGame')
+			$scope.boardState = gameBoard
+			drawBoard($scope.boardState)
+		}
+
 		socket.on('update board', function (gameBoard) {
 			$scope.boardState = gameBoard
-			console.log("gb", $scope.boardState)
+			console.log("board array:", $scope.boardState)
 			drawBoard($scope.boardState)
 		})
+
 
 		//drawBoard(boardState)
 	})
 
 socket.on('connect', () => console.log(`Socket connected: ${socket.id}`))
 socket.on('disconnect', () => console.log('Socket disconnected'))
-// socket.on('update board', gameBoard => drawBoard(gameBoard))
 
 
 
