@@ -7,6 +7,7 @@ const { json } = require('body-parser')
 const socketio = require('socket.io')
 const User = require('./models/user')
 const Game = require('./models/gameBoard')
+const Ships = require('./models/ship')
 const app = express()
 const server = Server(app)
 const io = socketio(server)
@@ -49,6 +50,7 @@ io.on('connection', socket => {
 	})
 	socket.on('startGame', () => {
 		Game.create({})
+			//.then(Ship.create({}))
 			.then(game => emitBoard(game))
 	})
 })
@@ -58,6 +60,9 @@ const emitBoard = (gameObj) => {
 	io.emit('update board', gameObj.board)
 	return gameObj
 }
+
+
+const shipsArray = []
 
 
 
