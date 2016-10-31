@@ -40,14 +40,16 @@ mongoose.connect(MONGODB_URL, () => {
 //Listens to Port for changes
 io.on('connection', socket => {
 	console.log(`Socket connected: ${socket.id}`)
-	Game.create({})
-	.then(game => emitBoard(game))
 	socket.on('disconnect', () => console.log(`Socket disconnected: ${socket.id}`))
 	socket.on('registerUser', user => {
 		User
 		.create(user)
 		.then(user => io.emit('newUser', user))
 		.catch(console.error)
+	})
+	socket.on('startGame', () => {
+		Game.create({})
+			.then(game => emitBoard(game))
 	})
 })
 
@@ -56,6 +58,18 @@ const emitBoard = (gameObj) => {
 	io.emit('update board', gameObj.board)
 	return gameObj
 }
+
+
+
+// const fireMissile = (board) => {
+// 	board.addEventListener('click', evt => {
+// 	  let col = evt.target.parentNode.cellIndex
+// 	  let row = evt.target.closest('tr').rowIndex
+// 	  console.log("clicked on row: ", row);
+// 	  console.log("clicked on col: ", col);
+// 	  io.emit('fire', { row, col })
+// 	})
+// }
 
 // Game.create({})
 // 	.then(game => emitBoard(game))
