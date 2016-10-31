@@ -88,7 +88,21 @@ const battleship = angular
 		const board_1 = document.querySelector('.board_1')
 		//const board_2 = document.querySelector('.board_2')
 
+		const emptyBoard = [
+            ['', '', '', '', '', '', '', '', '', ''],
+            ['', '', '', '', '', '', '', '', '', ''],
+            ['', '', '', '', '', '', '', '', '', ''],
+            ['', '', '', '', '', '', '', '', '', ''],
+            ['', '', '', '', '', '', '', '', '', ''],
+            ['', '', '', '', '', '', '', '', '', ''],
+            ['', '', '', '', '', '', '', '', '', ''],
+            ['', '', '', '', '', '', '', '', '', ''],
+            ['', '', '', '', '', '', '', '', '', ''],
+            ['', '', '', '', '', '', '', '', '', '']
+        ]
+
 		const drawBoard = b => {
+
 			board_1.innerHTML = `
 				<table>
 					<tr>
@@ -215,7 +229,7 @@ const battleship = angular
 			`
 		}
 
-		$scope.fireMissile = () => {
+		
 			board_1.addEventListener('click', evt => {
 			  let col = evt.target.closest('td').cellIndex
 			  let row = evt.target.closest('tr').rowIndex
@@ -223,7 +237,7 @@ const battleship = angular
 			  console.log("clicked on col: ", col);
 			  
 			})
-		}
+		
 
 		// board_1.addEventListener('click', evt => {
 		//   const col = evt.target.parentNode.cellIndex
@@ -233,12 +247,12 @@ const battleship = angular
 		//   //socket.emit('check whack', { row, col })
 		// })
 
-		$scope.startGame = (gameBoard) => {
-			socket.emit('startGame')
-			$scope.boardState = gameBoard
-			drawBoard($scope.boardState)
-		}
-
+	 $scope.startGame = (gameBoard) => {
+          socket.emit('startGame')
+          $scope.boardState = emptyBoard
+          drawBoard(emptyBoard)
+      }
+      
 		socket.on('update board', function (gameBoard) {
 			$scope.boardState = gameBoard
 			console.log("board array:", $scope.boardState)
