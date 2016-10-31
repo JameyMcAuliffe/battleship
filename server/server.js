@@ -19,14 +19,7 @@ const PORT = process.env.PORT || 3000
 
 app.use(express.static('client'))
 app.use(json())
-// app.get('/api/title', (req, res) => {
-// 	res.json({title: 'Battleship'})
-// })
 
-// app.get('/battle', (req, res) => {
-// 	Game.create({})
-// 		.then( game => res.redirect(`/battle/${game._id}`));
-// })
 
 
 //using es6 promises as promise library
@@ -50,7 +43,6 @@ io.on('connection', socket => {
 	})
 	socket.on('startGame', () => {
 		Game.create({})
-			//.then(Ship.create({}))
 			.then(game => emitBoard(game))
 			.then(createShips())
 	})
