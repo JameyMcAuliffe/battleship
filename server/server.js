@@ -68,6 +68,7 @@ io.on('connection', socket => {
 	})
 	socket.on('fireMissile', () => {
 		console.log('missile fired')
+		fireMissile()
 	})
 })
 
@@ -99,10 +100,13 @@ const updateBoard = (boardObj, gameId) => {
 		})
 }
 
-// const fireMissile = (gameId) => {
-// 	Game
-// 		.findById(gameId)
-// }
+const fireMissile = () => {
+	Game
+		.findById(globalGameId)
+		.then(gameObj => {
+			console.log(gameObj._id)
+		})
+}
 
 
 const emitBoard = (gameObj) => {
