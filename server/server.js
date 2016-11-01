@@ -11,15 +11,29 @@ const Ships = require('./models/ship')
 const app = express()
 const server = Server(app)
 const io = socketio(server)
+let globalGameId
 
 const MONGODB_URL = process.env.MONGODB_URL || 'mongodb://localhost:27017/battleship'
 const PORT = process.env.PORT || 3000
 
 //middlewares
-
 app.use(express.static('client'))
 app.use(json())
 
+app.get('/#/battle/create', (req, res, err) =>
+  Game
+    .find()
+    .then(game => console.log(game))
+    .catch(err)
+)
+
+app.post('/#/battle/create', createGame)
+
+
+
+// const startGame = (gameId) => {
+// 	console.log('starting game:', gameId)
+// }
 
 
 //using es6 promises as promise library
@@ -41,12 +55,28 @@ io.on('connection', socket => {
 		.then(user => io.emit('newUser', user))
 		.catch(console.error)
 	})
-	socket.on('startGame', () => {
-		Game.create({})
-			.then(game => emitBoard(game))
-			.then(createShips())
-	})
+	// socket.on('startGame', () => {
+	// 	Game.create({})
+	// 		.then(game => emitBoard(game))
+	// 		.then(createShips())
+	// })
 })
+
+function createGame(next) {
+	Game
+		.create({})
+		.then(gameObj => {
+			console.log('gameObj:', gameObj.board)
+		})
+		.catch(err => {
+      if (next) {
+        return next(err)
+      }
+      console.error(err)
+    })
+}
+
+//createGame()
 
 const emitBoard = (gameObj) => {
 	//sends to sockets on front end
@@ -82,32 +112,6 @@ const createShips = () => {
 }
 
 
-
-
-
-
-// const fireMissile = (board) => {
-// 	board.addEventListener('click', evt => {
-// 	  let col = evt.target.parentNode.cellIndex
-// 	  let row = evt.target.closest('tr').rowIndex
-// 	  console.log("clicked on row: ", row);
-// 	  console.log("clicked on col: ", col);
-// 	  io.emit('fire', { row, col })
-// 	})
-// }
-
-// Game.create({})
-// 	.then(game => emitBoard(game))
-
-//Game.create({}).then(game => console.log("game", game));
-
-
-
-// const emitBoard = (gameObj) => {
-// 	//sends to sockets on front end
-// 	io.emit('update board', gameObj.board)
-// 	return gameObj
-// }
 
 
 
