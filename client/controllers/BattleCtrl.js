@@ -145,13 +145,14 @@ battleship.controller('BattleCtrl', function($scope, $http, socket) {
 			`
 		}
 
-		
 			board_1.addEventListener('click', evt => {
+			  socket.emit('fireMissile')	  
 			  let col = evt.target.closest('td').cellIndex
 			  let row = evt.target.closest('tr').rowIndex
 			  console.log("clicked on row: ", row);
-			  console.log("clicked on col: ", col);	  
+			  console.log("clicked on col: ", col);
 			})
+		
 		
 
 	  $scope.startGame = (gameBoard) => {
