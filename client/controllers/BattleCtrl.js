@@ -163,6 +163,7 @@ battleship.controller('BattleCtrl', function($scope, $http, socket) {
     }
       
 		socket.on('draw board', function (gameBoard) {
+			//console.log('socket obj:', gameBoard)
 			$scope.boardState = gameBoard
 			console.log("board array:", $scope.boardState)
 			drawBoard($scope.boardState)
