@@ -88,19 +88,25 @@ io.on('connection', socket => {
 // }
 
 
-const updateBoard = (boardObj, gameId) => {
-	// console.log("sending updated board obj to db: ", boardObj);
-
+const updateBoard = (gameObj) => {
+	//console.log("updateBoard", gameObj);
+	let gameId = gameObj.id
+	let boardObj = gameObj.board
+	console.log('gameId:', gameId)
+	console.log('board before going to mongo:', boardObj)
 	//send new board to update the db
 	return Game
 		//finds game on db by id, updates the game object with object passed + returns entire game object
-		.findOneAndUpdate({_id: gameId}, boardObj, { upsert: true, new: true })
-		.then(gameObj => {
-			console.log(gameObj)
+		.findOneAndUpdate({_id: gameId}, { $set: { board: boardObj } }, { upsert: true, new: true }, (err, game) => {
+			console.log('game post update:', game)
 		})
+		// .then(updatedObj => {
+		// 	//console.log(updatedObj)
+		// 	return updatedObj
+		// })
 }
 
-
+//accepts target object containing col and row from fire missile emit event
 const fireMissile = (target) => {
 	let col = target.col
 	let row = target.row
@@ -114,7 +120,15 @@ const fireMissile = (target) => {
 			//let gameId = gameObj._id
 			//gamePlay(gameObj)
 			gameObj.board[row][col] = `X`
-			console.log('updated board:', gameObj.board)
+			//console.log('targeted box:', gameObj.board)
+			let updatedObj = {
+				board: gameObj.board,
+				id: gameObj._id
+			}
+			return updatedObj
+		})
+		.then(updatedObj => {
+			updateBoard(updatedObj)
 		})
 }
 
