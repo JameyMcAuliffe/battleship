@@ -12,6 +12,7 @@ const app = express()
 const server = Server(app)
 const io = socketio(server)
 let globalGameId
+let globalShipsId
 
 const MONGODB_URL = process.env.MONGODB_URL || 'mongodb://localhost:27017/battleship'
 const PORT = process.env.PORT || 3000
@@ -20,14 +21,14 @@ const PORT = process.env.PORT || 3000
 app.use(express.static('client'))
 app.use(json())
 
-app.post('/#/battle/create', createGame)
+// app.post('/#/battle/create', createGame)
 
-app.get('/#/battle/create', (req, res, err) =>
-  Game
-    .find()
-    .then(game => console.log(game))
-    .catch(err)
-)
+// app.get('/#/battle/create', (req, res, err) =>
+//   Game
+//     .find()
+//     .then(game => console.log(game))
+//     .catch(err)
+// )
 
 
 
@@ -55,29 +56,35 @@ io.on('connection', socket => {
 		.then(user => io.emit('newUser', user))
 		.catch(console.error)
 	})
-	// socket.on('startGame', () => {
-	// 	Game.create({})
-	// 		.then(game => emitBoard(game))
-	// 		.then(createShips())
-	// })
+	socket.on('startGame', () => {
+		Game.create({})
+			//.then(game => emitBoard(game))
+			.then(game => {
+				globalGameId = game._id
+				console.log('gameId', globalGameId)
+			})
+			.then(createShips())
+			// .then(ships => {
+			// 	console.log('shipsArray', ships)
+			// })
+	})
 })
 
-function createGame(next) {
-	Game
-		.create({})
-		.then(gameObj => {
-			console.log('gameObj:', gameObj.board)
-			//emitBoard(gameObj.board)
-		})
-		.catch(err => {
-      if (next) {
-        return next(err)
-      }
-      console.error(err)
-    })
-}
+// function createGame(next) {
+// 	Game
+// 		.create({})
+// 		.then(gameObj => {
+// 			console.log('gameObj:', gameObj.board)
+// 			//emitBoard(gameObj.board)
+// 		})
+// 		.catch(err => {
+//       if (next) {
+//         return next(err)
+//       }
+//       console.error(err)
+//     })
+// }
 
-//createGame()
 
 
 const emitBoard = (gameObj) => {
@@ -110,6 +117,10 @@ const createShips = () => {
 				size: 2
 			}
 		]
+	})
+	.then(ships => {
+		globalShipsId = ships._id
+		console.log('shipsArrayId', globalShipsId)
 	})
 }
 
