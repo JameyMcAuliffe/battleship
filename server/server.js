@@ -129,6 +129,11 @@ const fireMissile = (target) => {
 		})
 		.then(updatedObj => {
 			updateBoard(updatedObj)
+			return updatedObj
+		})
+		.then(updatedObj => {
+			emitBoard(updatedObj)
+			//console.log('emit obj:', updatedObj)
 		})
 }
 
