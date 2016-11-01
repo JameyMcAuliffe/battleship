@@ -243,7 +243,7 @@ const battleship = angular
       drawBoard(emptyBoard)
     }
       
-		// socket.on('update board', function (gameBoard) {
+		// socket.on('draw board', function (gameBoard) {
 		// 	$scope.boardState = gameBoard
 		// 	console.log("board array:", $scope.boardState)
 		// 	drawBoard($scope.boardState)

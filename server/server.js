@@ -20,14 +20,14 @@ const PORT = process.env.PORT || 3000
 app.use(express.static('client'))
 app.use(json())
 
+app.post('/#/battle/create', createGame)
+
 app.get('/#/battle/create', (req, res, err) =>
   Game
     .find()
     .then(game => console.log(game))
     .catch(err)
 )
-
-app.post('/#/battle/create', createGame)
 
 
 
@@ -67,6 +67,7 @@ function createGame(next) {
 		.create({})
 		.then(gameObj => {
 			console.log('gameObj:', gameObj.board)
+			//emitBoard(gameObj.board)
 		})
 		.catch(err => {
       if (next) {
@@ -78,9 +79,10 @@ function createGame(next) {
 
 //createGame()
 
+
 const emitBoard = (gameObj) => {
 	//sends to sockets on front end
-	io.emit('update board', gameObj.board)
+	io.emit('draw board', gameObj.board)
 	return gameObj
 }
 
