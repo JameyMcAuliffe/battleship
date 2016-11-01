@@ -61,12 +61,14 @@ io.on('connection', socket => {
 			//.then(game => emitBoard(game))
 			.then(game => {
 				globalGameId = game._id
-				console.log('gameId', globalGameId)
+				console.log('gameId:', globalGameId)
+				return globalGameId
 			})
 			.then(createShips())
-			// .then(ships => {
-			// 	console.log('shipsArray', ships)
-			// })
+	})
+	socket.on('fireMissile', () => {
+		console.log('missile fired')
+		fireMissile()
 	})
 })
 
@@ -85,6 +87,26 @@ io.on('connection', socket => {
 //     })
 // }
 
+
+const updateBoard = (boardObj, gameId) => {
+	// console.log("sending updated board obj to db: ", boardObj);
+
+	//send new board to update the db
+	return Game
+		//finds game on db by id, updates the game object with object passed + returns entire game object
+		.findOneAndUpdate({_id: gameId}, boardObj, { upsert: true, new: true })
+		.then(gameObj => {
+			return gameObj;
+		})
+}
+
+const fireMissile = () => {
+	Game
+		.findById(globalGameId)
+		.then(gameObj => {
+			console.log(gameObj._id)
+		})
+}
 
 
 const emitBoard = (gameObj) => {
@@ -120,7 +142,7 @@ const createShips = () => {
 	})
 	.then(ships => {
 		globalShipsId = ships._id
-		console.log('shipsArrayId', globalShipsId)
+		console.log('shipsArrayId:', globalShipsId)
 	})
 }
 
