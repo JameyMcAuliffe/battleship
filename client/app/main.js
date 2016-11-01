@@ -1,8 +1,5 @@
 'use strict'
 
-
-
-// const socket = io()
 //const User = require('../../server/models/user')
 
 const battleship = angular
@@ -26,6 +23,7 @@ const battleship = angular
 				templateUrl: 'partials/battle.html'
 			})
 	)
+	
 	const socket = io()
 
 	/****************** Factories *****************/
@@ -239,28 +237,19 @@ const battleship = angular
 			})
 		
 
-		// board_1.addEventListener('click', evt => {
-		//   const col = evt.target.parentNode.cellIndex
-		//   const row = evt.target.closest('tr').rowIndex
-		//   console.log("clicked on row: ", row);
-		//   console.log("clicked on col: ", col);
-		//   //socket.emit('check whack', { row, col })
+	  $scope.startGame = (gameBoard) => {
+      socket.emit('startGame')
+      $scope.boardState = emptyBoard
+      drawBoard(emptyBoard)
+    }
+      
+		// socket.on('draw board', function (gameBoard) {
+		// 	$scope.boardState = gameBoard
+		// 	console.log("board array:", $scope.boardState)
+		// 	drawBoard($scope.boardState)
 		// })
 
-	 $scope.startGame = (gameBoard) => {
-          socket.emit('startGame')
-          $scope.boardState = emptyBoard
-          drawBoard(emptyBoard)
-      }
-      
-		socket.on('update board', function (gameBoard) {
-			$scope.boardState = gameBoard
-			console.log("board array:", $scope.boardState)
-			drawBoard($scope.boardState)
-		})
-
-
-		//drawBoard(boardState)
+		//socket.on('update board', gameBoard => drawBoard(gameBoard))
 	})
 
 socket.on('connect', () => console.log(`Socket connected: ${socket.id}`))
