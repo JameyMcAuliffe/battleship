@@ -56,7 +56,7 @@ io.on('connection', socket => {
 		.then(user => io.emit('newUser', user))
 		.catch(console.error)
 	})
-	socket.on('startGame', () => {
+	socket.on('createGame', () => {
 		Game.create({})
 			//.then(game => emitBoard(game))
 			.then(game => {
@@ -66,9 +66,9 @@ io.on('connection', socket => {
 			})
 			.then(createShips())
 	})
-	socket.on('fireMissile', () => {
+	socket.on('fireMissile', target => {
 		console.log('missile fired')
-		fireMissile()
+		fireMissile(target)
 	})
 })
 
@@ -96,16 +96,30 @@ const updateBoard = (boardObj, gameId) => {
 		//finds game on db by id, updates the game object with object passed + returns entire game object
 		.findOneAndUpdate({_id: gameId}, boardObj, { upsert: true, new: true })
 		.then(gameObj => {
-			return gameObj;
+			console.log(gameObj)
 		})
 }
 
-const fireMissile = () => {
+
+const fireMissile = (target) => {
+	let col = target.col
+	let row = target.row
+	console.log('row:', row)
+	console.log('col:', col)
 	Game
 		.findById(globalGameId)
 		.then(gameObj => {
-			console.log(gameObj._id)
+			// console.log('gameId:', gameObj._id)
+			// return gameObj
+			//let gameId = gameObj._id
+			//gamePlay(gameObj)
+			gameObj.board[row][col] = `X`
+			console.log('updated board:', gameObj.board)
 		})
+}
+
+function gamePlay(gameObj) {
+	console.log('current game board:', gameObj._id)
 }
 
 
