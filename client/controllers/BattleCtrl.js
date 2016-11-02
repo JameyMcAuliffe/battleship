@@ -160,6 +160,13 @@ battleship.controller('BattleCtrl', function($scope, $http, socket) {
       console.log(emptyBoard)
       drawBoard(emptyBoard)
     }
+
+    $scope.onDragComplete=function(data,evt){
+       console.log("drag success, data:", data);
+    }
+    $scope.onDropComplete=function(data,evt){
+        console.log("drop success, data:", data);
+    }
       
 		socket.on('draw board', function (gameBoard) {
 			//console.log('socket obj:', gameBoard)
