@@ -3,7 +3,7 @@
 //const User = require('../../server/models/user')
 
 const battleship = angular
-	.module('battleship', ['ngRoute'])
+	.module('battleship', ['ngRoute', 'ngDraggable'])
 	.config($routeProvider => 
 		$routeProvider
 			.when('/', {
