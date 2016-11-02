@@ -155,9 +155,8 @@ battleship.controller('BattleCtrl', function($scope, $http, socket) {
 		
 		
 
-	  $scope.createGame = (gameBoard) => {
+	  $scope.createGame = () => {
       socket.emit('createGame')
-      $scope.boardState = emptyBoard
       console.log(emptyBoard)
       drawBoard(emptyBoard)
     }
@@ -167,6 +166,11 @@ battleship.controller('BattleCtrl', function($scope, $http, socket) {
 			$scope.boardState = gameBoard
 			console.log("board array:", $scope.boardState)
 			drawBoard($scope.boardState)
+		})
+
+		socket.on('insertShips', function (shipsArray) {
+			$scope.shipsArray = shipsArray
+			console.log('shipsArray:', $scope.shipsArray)
 		})
 
 		//socket.on('update board', gameBoard => drawBoard(gameBoard))

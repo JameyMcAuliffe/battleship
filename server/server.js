@@ -72,21 +72,6 @@ io.on('connection', socket => {
 	})
 })
 
-// function createGame(next) {
-// 	Game
-// 		.create({})
-// 		.then(gameObj => {
-// 			console.log('gameObj:', gameObj.board)
-// 			//emitBoard(gameObj.board)
-// 		})
-// 		.catch(err => {
-//       if (next) {
-//         return next(err)
-//       }
-//       console.error(err)
-//     })
-// }
-
 
 const updateBoard = (gameObj) => {
 	//console.log("updateBoard", gameObj);
@@ -176,6 +161,12 @@ const createShips = () => {
 	.then(ships => {
 		globalShipsId = ships._id
 		console.log('shipsArrayId:', globalShipsId)
+		let shipsArray = []
+		for (let i = 0; i < 5; i++) {
+			shipsArray.push(ships.ships[i].name)
+		}
+		console.log('shipsArray:', shipsArray)
+		io.emit('insertShips', (shipsArray))
 	})
 }
 
