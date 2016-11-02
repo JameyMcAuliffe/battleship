@@ -1,9 +1,22 @@
 td {
 	border: 1px solid blue;
 	text-align: center;
+	/*max-height: 75px;
+	max-width: 75px;
+	min-height: 75px;
+	min-width: 75px;*/
+	width: 75px;
+	height: 75px;
+	overflow: none;
+	background-color: lightblue;
 }
 
 table {
-	height: 500px;
-	width: 500px;
+	max-width: 750px !important;
+	min-width: 750px;
+	max-height: 750px !important;
+	min-height: 750px;
+	padding: 0px;
+	margin: 0px;
+	overflow: none;
 }

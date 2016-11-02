@@ -6,7 +6,7 @@
 // const angularDragula = require('angular-dragula')
 
 const battleship = angular
-	.module('battleship', ['ngRoute', 'ngDraggable', angularDragula(angular)])
+	.module('battleship', ['ngRoute', 'ngDraggable'])
 	.config($routeProvider => 
 		$routeProvider
 			.when('/', {

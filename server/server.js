@@ -7,12 +7,12 @@ const { json } = require('body-parser')
 const socketio = require('socket.io')
 const User = require('./models/user')
 const Game = require('./models/gameBoard')
-const Ships = require('./models/ship')
+//const Ships = require('./models/ship')
 const app = express()
 const server = Server(app)
 const io = socketio(server)
 let globalGameId
-let globalShipsId
+//let globalShipsId
 
 const MONGODB_URL = process.env.MONGODB_URL || 'mongodb://localhost:27017/battleship'
 const PORT = process.env.PORT || 3000
@@ -48,7 +48,7 @@ io.on('connection', socket => {
 				console.log('gameId:', globalGameId)
 				return globalGameId
 			})
-			.then(createShips())
+			//.then(createShips())
 	})
 	socket.on('fireMissile', target => {
 		console.log('missile fired')
@@ -117,42 +117,42 @@ const emitBoard = (gameObj) => {
 	return gameObj
 }
 
-const createShips = () => {
-	Ships.create({
-		ships: [
-			{
-				name: 'Carrier',
-				size: 5
-			},
-			{
-				name: 'Battleship',
-				size: 4
-			},
-			{
-				name: 'Submarine',
-				size: 3
-			},
-			{
-				name: 'Cruiser',
-				size: 3
-			},
-			{
-				name: 'Destroyer',
-				size: 2
-			}
-		]
-	})
-	.then(ships => {
-		globalShipsId = ships._id
-		console.log('shipsArrayId:', globalShipsId)
-		let shipsArray = []
-		for (let i = 0; i < 5; i++) {
-			shipsArray.push(ships.ships[i])
-		}
-		console.log('shipsArray:', shipsArray)
-		io.emit('insertShips', (shipsArray))
-	})
-}
+ //const createShips = () => {
+// 	Ships.create({
+// 		ships: [
+// 			{
+// 				name: 'Carrier',
+// 				size: 5
+// 			},
+// 			{
+// 				name: 'Battleship',
+// 				size: 4
+// 			},
+// 			{
+// 				name: 'Submarine',
+// 				size: 3
+// 			},
+// 			{
+// 				name: 'Cruiser',
+// 				size: 3
+// 			},
+// 			{
+// 				name: 'Destroyer',
+// 				size: 2
+// 			}
+// 		]
+// 	})
+// 	.then(ships => {
+// 		globalShipsId = ships._id
+// 		console.log('shipsArrayId:', globalShipsId)
+// 		let shipsArray = []
+// 		for (let i = 0; i < 5; i++) {
+// 			shipsArray.push(ships.ships[i])
+// 		}
+// 		console.log('shipsArray:', shipsArray)
+// 		io.emit('insertShips', (shipsArray))
+// 	})
+//}
 
 
 

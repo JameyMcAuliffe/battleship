@@ -11,18 +11,28 @@
 	</div>
 </div>
 <div class="row">
-	<div class="ships">
-		<ul>
-			<div dragula='"bag-one"'>
+	<div ng-show="showBoats">
+		<ul class="ships">
 			<!-- <li ng-drag="true" ng-drag-data="{obj}" ng-drag-success="onDragComplete($data,$event)" ng-center-anchor="true" class="chip" ng-repeat="ship in shipsArray">{{ship.name}}</li> -->
-				<li ng-repeat="ship in shipsArray" class="chip">{{ship.name}}</li>
-			</div>
+				<!-- <li ng-repeat="ship in shipsArray" class="chip" dragula-model="shipsArray">{{ship.name}}</li> -->
+			<li class="chip">Carrier</li>
+			<li class="chip">Battleship</li>
+			<li class="chip">Submarine</li>
+			<li class="chip">Cruiser</li>
+			<li class="chip">Destroyer</li>
 		</ul>
 	</div>
 </div>
-<!-- <div class="row" ng-drop="true" ng-drop-success="onDropComplete($data,$event)">
-	<div class="board_1" ></div>
+<!-- <div class="row">
+	<div class="wrapper">
+		<div class="container" dragula='"bag-1"' dragula-model="shipsArray">
+			<div ng-repeat="ship in shipsArray" class="chip">{{ship.name}}</div>
+		</div>
+	</div>
 </div> -->
-<div class="board_1"></div>
+<div class="row" ng-drop="true" ng-drop-success="onDropComplete($data,$event)">
+	<div class="board_1" ></div>
+</div>
+<div class="board_1" dragula='"bag-1"'></div>
 
 

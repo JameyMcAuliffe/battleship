@@ -2,9 +2,9 @@
 
 battleship.controller('BattleCtrl', function($scope, $http, socket) {
 		const board_1 = document.querySelector('.board_1')
+		const chip = document.querySelector('.ships')
 		//const board_2 = document.querySelector('.board_2')
 
-		
 		const emptyBoard = [
             ['', '', '', '', '', '', '', '', '', ''],
             ['', '', '', '', '', '', '', '', '', ''],
@@ -146,30 +146,81 @@ battleship.controller('BattleCtrl', function($scope, $http, socket) {
 			`
 		}
 
-			board_1.addEventListener('click', evt => {
-			  let col = evt.target.closest('td').cellIndex
-			  let row = evt.target.closest('tr').rowIndex
-			  console.log("clicked on row: ", row);
-			  console.log("clicked on col: ", col);
-			  socket.emit('fireMissile', { row, col })	  
+			// board_1.addEventListener('click', evt => {
+			//   let col = evt.target.closest('td').cellIndex
+			//   let row = evt.target.closest('tr').rowIndex
+			//   console.log("clicked on row: ", row);
+			//   console.log("clicked on col: ", col);
+			//   socket.emit('fireMissile', { row, col })	  
+			// })
+
+			const mouseOver = () => {
+				event.target.style.backgroundColor = "orange"
+			}
+			const mouseOut = () => {
+				event.target.style.backgroundColor = "lightblue"
+			}
+			const dropShip = () => {
+				event.target.style.backgroundColor = "gray"
+				board_1.removeEventListener('mouseover', mouseOver)
+				board_1.removeEventListener('mouseout', mouseOut)
+				board_1.removeEventListener('click', dropShip)
+			}
+
+
+
+			chip.addEventListener('click', evt => {
+				console.log('clicked chip:', evt.target.innerHTML)
+				let size = 0
+				let shipName = evt.target.innerHTML
+				if (shipName === 'Carrier') {
+					size = 5
+				}
+				else if (shipName === 'Battleship') {
+					size = 4
+				}
+				else if (shipName === 'Submarine') {
+					size = 3
+				}
+				else if (shipName === 'Cruiser') {
+					size = 3
+				}
+				else if (shipName === 'Destroyer') {
+					size = 2
+				}
+				console.log('ship size:', size)
+
+				board_1.addEventListener('mouseover', mouseOver)
+				board_1.addEventListener('mouseout', mouseOut)
+				board_1.addEventListener('click', dropShip)
 			})
-		
-		
+
+
+
+			
+		// $('.chip').on('chip.select', function(e, chip){
+	 //    // you have the selected chip here
+	 //    console.log('chip event:', e)
+	 //    console.log('chip:', chip)
+  // 	});
+
 		
 
 	  $scope.createGame = () => {
       socket.emit('createGame')
       console.log(emptyBoard)
       drawBoard(emptyBoard)
+      $scope.showBoats = true
     }
 
     //functions called on ngDraggable events
-    $scope.onDragComplete=function(data,evt){
-       console.log("drag success, data:", data);
-    }
-    $scope.onDropComplete=function(data,evt){
-        console.log("drop success, data:", data);
-    }
+    // $scope.onDragComplete=function(data,evt){
+    //    console.log("drag success, data:", data);
+    // }
+    // $scope.onDropComplete=function(data,evt){
+    //     console.log("drop success, data:", evt);
+
+    // }
       
 		socket.on('draw board', function (gameBoard) {
 			//console.log('socket obj:', gameBoard)
@@ -178,10 +229,10 @@ battleship.controller('BattleCtrl', function($scope, $http, socket) {
 			drawBoard($scope.boardState)
 		})
 
-		socket.on('insertShips', function (shipsArray) {
-			$scope.shipsArray = shipsArray
-			console.log('shipsArray:', $scope.shipsArray)
-		})
+		// socket.on('insertShips', function (shipsArray) {
+		// 	$scope.shipsArray = shipsArray
+		// 	console.log('shipsArray:', $scope.shipsArray)
+		// })
 
 		//socket.on('update board', gameBoard => drawBoard(gameBoard))
 	})
