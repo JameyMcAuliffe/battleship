@@ -21,22 +21,6 @@ const PORT = process.env.PORT || 3000
 app.use(express.static('client'))
 app.use(json())
 
-// app.post('/#/battle/create', createGame)
-
-// app.get('/#/battle/create', (req, res, err) =>
-//   Game
-//     .find()
-//     .then(game => console.log(game))
-//     .catch(err)
-// )
-
-
-
-// const startGame = (gameId) => {
-// 	console.log('starting game:', gameId)
-// }
-
-
 //using es6 promises as promise library
 mongoose.Promise = Promise
 
@@ -104,7 +88,7 @@ const fireMissile = (target) => {
 			// return gameObj
 			//let gameId = gameObj._id
 			//gamePlay(gameObj)
-			gameObj.board[row][col] = `X`
+			gameObj.board[row][col] = `x`
 			//console.log('targeted box:', gameObj.board)
 			let updatedObj = {
 				board: gameObj.board,
@@ -163,7 +147,7 @@ const createShips = () => {
 		console.log('shipsArrayId:', globalShipsId)
 		let shipsArray = []
 		for (let i = 0; i < 5; i++) {
-			shipsArray.push(ships.ships[i].name)
+			shipsArray.push(ships.ships[i])
 		}
 		console.log('shipsArray:', shipsArray)
 		io.emit('insertShips', (shipsArray))

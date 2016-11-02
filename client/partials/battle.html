@@ -13,13 +13,16 @@
 <div class="row">
 	<div class="ships">
 		<ul>
-			<li ng-drag="true" ng-drag-data="{obj}" ng-drag-success="onDragComplete($data,$event)" ng-center-anchor="true" class="chip" ng-repeat="ship in shipsArray">{{ship}}</li>
+			<div dragula='"bag-one"'>
+			<!-- <li ng-drag="true" ng-drag-data="{obj}" ng-drag-success="onDragComplete($data,$event)" ng-center-anchor="true" class="chip" ng-repeat="ship in shipsArray">{{ship.name}}</li> -->
+				<li ng-repeat="ship in shipsArray" class="chip">{{ship.name}}</li>
+			</div>
 		</ul>
 	</div>
 </div>
-<div class="row" ng-drop="true" ng-drop-success="onDropComplete($data,$event)">
+<!-- <div class="row" ng-drop="true" ng-drop-success="onDropComplete($data,$event)">
 	<div class="board_1" ></div>
-</div>
-<div class="board_2"></div>
+</div> -->
+<div class="board_1"></div>
 
 

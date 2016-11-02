@@ -1,9 +1,12 @@
 'use strict'
 
-//const User = require('../../server/models/user')
+
+//Dragula setup
+// const angular = require('angular')
+// const angularDragula = require('angular-dragula')
 
 const battleship = angular
-	.module('battleship', ['ngRoute', 'ngDraggable'])
+	.module('battleship', ['ngRoute', 'ngDraggable', angularDragula(angular)])
 	.config($routeProvider => 
 		$routeProvider
 			.when('/', {

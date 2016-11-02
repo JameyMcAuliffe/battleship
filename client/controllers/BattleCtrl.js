@@ -4,6 +4,7 @@ battleship.controller('BattleCtrl', function($scope, $http, socket) {
 		const board_1 = document.querySelector('.board_1')
 		//const board_2 = document.querySelector('.board_2')
 
+		
 		const emptyBoard = [
             ['', '', '', '', '', '', '', '', '', ''],
             ['', '', '', '', '', '', '', '', '', ''],
@@ -154,6 +155,7 @@ battleship.controller('BattleCtrl', function($scope, $http, socket) {
 			})
 		
 		
+		
 
 	  $scope.createGame = () => {
       socket.emit('createGame')
@@ -161,6 +163,7 @@ battleship.controller('BattleCtrl', function($scope, $http, socket) {
       drawBoard(emptyBoard)
     }
 
+    //functions called on ngDraggable events
     $scope.onDragComplete=function(data,evt){
        console.log("drag success, data:", data);
     }
