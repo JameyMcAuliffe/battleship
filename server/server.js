@@ -58,6 +58,17 @@ io.on('connection', socket => {
 		console.log('ship placed')
 		placeShip(location)
 	})
+	socket.on('startDemo', () => {
+		Game
+			.findById(globalGameId)
+			// .then(gameObj => {
+			// 	updateBoard(gameObj)
+			// 	return gameObj
+			// })
+			.then(gameObj => {
+				emitBoard(gameObj)
+			})
+	})
 })
 
 
@@ -102,17 +113,17 @@ const placeShip = (location) => {
 		})
 		.then(updatedObj => {
 			updateBoard(updatedObj)
-			return updatedObj
+			//return updatedObj
 		})
-		.then(updatedObj => {
-			emitBoard(updatedObj)
-			//console.log('emit obj:', updatedObj)
-		})
+		// .then(updatedObj => {
+		// 	emitBoard(updatedObj)
+		// 	//console.log('emit obj:', updatedObj)
+		// })
 }
 
-const startDemo = (updatedObj) => {
-	emitBoard(updatedObj)
-}
+// const startDemo = (updatedObj) => {
+// 	emitBoard(updatedObj)
+// }
 
 //accepts target object containing col and row from fire missile emit event
 const fireMissile = (target) => {
