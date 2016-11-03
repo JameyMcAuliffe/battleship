@@ -146,31 +146,27 @@ battleship.controller('BattleCtrl', function($scope, $http, socket) {
 			`
 		}
 
-			// board_1.addEventListener('click', evt => {
-			//   let col = evt.target.closest('td').cellIndex
-			//   let row = evt.target.closest('tr').rowIndex
-			//   console.log("clicked on row: ", row);
-			//   console.log("clicked on col: ", col);
-			//   socket.emit('fireMissile', { row, col })	  
-			// })
-
 			$scope.startDemo = () => {
 				socket.emit('startDemo')
 				$scope.showBoats = false
 				$scope.showDemoButton = false
 	      $scope.hideNewButton = false
+	      $scope.msg = ''
 				board_1.addEventListener('click', evt => {
 				  let col = evt.target.closest('td').cellIndex
 				  let row = evt.target.closest('tr').rowIndex
 				  console.log("clicked on row: ", row);
 				  console.log("clicked on col: ", col);
-				  socket.emit('fireMissile', { row, col })
-				  // socket.on('hitTarget', (target) => {
-				  // 	//console.log('target:', target)
-				  // })
-				  // socket.on('missedTarget', (target) => {
-				  // 	//console.log('target:', target)
-				  // })  
+				  socket.emit('fireMissile', { row, col }) 
+				})
+				socket.on('hitTarget', () => {
+					$scope.msg = 'Direct hit, you are super'
+				})
+				socket.on('missedTarget', () => {
+					$scope.msg = 'Try hitting the ships, nerd'
+				})
+				socket.on('previousTarget', () => {
+					$scope.msg = 'Try somewhere new'
 				})
 			}
 
@@ -200,10 +196,6 @@ battleship.controller('BattleCtrl', function($scope, $http, socket) {
 				board_1.removeEventListener('click', dropShip)
 			}
 
-			// const removeFromShipsArray = (index) => {
-			// 	shipsArray.splice(index, 1)
-			// }
-
 
 			chip.addEventListener('click', evt => {
 				//console.log('clicked chip:', evt.target.innerHTML)
@@ -231,25 +223,6 @@ battleship.controller('BattleCtrl', function($scope, $http, socket) {
 				board_1.addEventListener('mouseout', mouseOut)
 				board_1.addEventListener('click', dropShip)
 			})
-
-
-
-			
-		// $('.chip').on('chip.select', function(e, chip){
-	 //    // you have the selected chip here
-	 //    console.log('chip event:', e)
-	 //    console.log('chip:', chip)
-  // 	});
-
-
-    //functions called on ngDraggable events
-    // $scope.onDragComplete=function(data,evt){
-    //    console.log("drag success, data:", data);
-    // }
-    // $scope.onDropComplete=function(data,evt){
-    //     console.log("drop success, data:", evt);
-
-    // }
       
 		socket.on('draw board', function (gameBoard) {
 			//console.log('socket obj:', gameBoard)
@@ -257,11 +230,4 @@ battleship.controller('BattleCtrl', function($scope, $http, socket) {
 			console.log("board array:", $scope.boardState)
 			drawBoard($scope.boardState)
 		})
-
-		// socket.on('insertShips', function (shipsArray) {
-		// 	$scope.shipsArray = shipsArray
-		// 	console.log('shipsArray:', $scope.shipsArray)
-		// })
-
-		//socket.on('update board', gameBoard => drawBoard(gameBoard))
 	})
