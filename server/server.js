@@ -48,7 +48,6 @@ io.on('connection', socket => {
 				console.log('gameId:', globalGameId)
 				return globalGameId
 			})
-			//.then(createShips())
 	})
 	socket.on('fireMissile', target => {
 		console.log('missile fired')
@@ -61,10 +60,6 @@ io.on('connection', socket => {
 	socket.on('startDemo', () => {
 		Game
 			.findById(globalGameId)
-			// .then(gameObj => {
-			// 	updateBoard(gameObj)
-			// 	return gameObj
-			// })
 			.then(gameObj => {
 				emitBoard(gameObj)
 			})
@@ -84,10 +79,6 @@ const updateBoard = (gameObj) => {
 		.findOneAndUpdate({_id: gameId}, { $set: { board: boardObj } }, { upsert: true, new: true }, (err, game) => {
 			console.log('game post update:', game)
 		})
-		// .then(updatedObj => {
-		// 	//console.log(updatedObj)
-		// 	return updatedObj
-		// })
 }
 
 //accepts target object containing col and row from placeShip emit event
@@ -99,12 +90,7 @@ const placeShip = (location) => {
 	Game
 		.findById(globalGameId)
 		.then(gameObj => {
-			// console.log('gameId:', gameObj._id)
-			// return gameObj
-			//let gameId = gameObj._id
-			//gamePlay(gameObj)
 			gameObj.board[row][col] = ` `
-			//console.log('targeted box:', gameObj.board)
 			let updatedObj = {
 				board: gameObj.board,
 				id: gameObj._id
@@ -113,17 +99,9 @@ const placeShip = (location) => {
 		})
 		.then(updatedObj => {
 			updateBoard(updatedObj)
-			//return updatedObj
 		})
-		// .then(updatedObj => {
-		// 	emitBoard(updatedObj)
-		// 	//console.log('emit obj:', updatedObj)
-		// })
 }
 
-// const startDemo = (updatedObj) => {
-// 	emitBoard(updatedObj)
-// }
 
 //accepts target object containing col and row from fire missile emit event
 const fireMissile = (target) => {
@@ -134,24 +112,23 @@ const fireMissile = (target) => {
 	Game
 		.findById(globalGameId)
 		.then(gameObj => {
-			// console.log('gameId:', gameObj._id)
-			// return gameObj
-			//let gameId = gameObj._id
 			let target = gameObj.board[row][col]
 			console.log('target:', target)
-			//gameObj.board[row][col] = `x`
 			if (target === ' ') {
 				gameObj.board[row][col] = '🔴'
 				console.log('Target Hit')
-				//io.emit('hitTarget', target)
+				io.emit('hitTarget')
 				return gameObj
 				
 			}
-			else {
+			else if (target === '') {
 				gameObj.board[row][col] = '⚪️'
 				console.log('Target Missed')
-				//io.emit('missedTarget', target)
+				io.emit('missedTarget')
 				return gameObj
+			}
+			else if (target === '🔴' || target === '⚪️'){
+				io.emit('previousTarget')
 			}
 			//console.log('targeted box:', gameObj.board)
 			let updatedObj = {
