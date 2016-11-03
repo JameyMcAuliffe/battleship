@@ -28,3 +28,7 @@ table {
 	margin: 0px;
 	overflow: none;
 }
+
+.hit {
+	background-color: red;
+}

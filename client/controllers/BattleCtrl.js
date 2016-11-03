@@ -3,7 +3,7 @@
 battleship.controller('BattleCtrl', function($scope, $http, socket) {
 		const board_1 = document.querySelector('.board_1')
 		const chip = document.querySelector('.ships')
-		//const board_2 = document.querySelector('.board_2')
+		
 
 		const emptyBoard = [
             ['', '', '', '', '', '', '', '', '', ''],
@@ -162,9 +162,16 @@ battleship.controller('BattleCtrl', function($scope, $http, socket) {
 				  let row = evt.target.closest('tr').rowIndex
 				  console.log("clicked on row: ", row);
 				  console.log("clicked on col: ", col);
-				  socket.emit('fireMissile', { row, col })	  
+				  socket.emit('fireMissile', { row, col })
+				  // socket.on('hitTarget', (target) => {
+				  // 	//console.log('target:', target)
+				  // })
+				  // socket.on('missedTarget', (target) => {
+				  // 	//console.log('target:', target)
+				  // })  
 				})
 			}
+
 
 		  $scope.createGame = () => {
 	      socket.emit('createGame')

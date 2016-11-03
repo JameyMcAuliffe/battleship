@@ -127,12 +127,20 @@ const fireMissile = (target) => {
 			// return gameObj
 			//let gameId = gameObj._id
 			let target = gameObj.board[row][col]
+			console.log('target:', target)
 			//gameObj.board[row][col] = `x`
 			if (target === '.') {
+				gameObj.board[row][col] = 'X'
 				console.log('Target Hit')
+				//io.emit('hitTarget', target)
+				return gameObj
+				
 			}
 			else {
+				gameObj.board[row][col] = 'O'
 				console.log('Target Missed')
+				//io.emit('missedTarget', target)
+				return gameObj
 			}
 			//console.log('targeted box:', gameObj.board)
 			let updatedObj = {
