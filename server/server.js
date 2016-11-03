@@ -147,9 +147,8 @@ const fireMissile = (target) => {
 		})
 }
 
-
+//sends board object to front end
 const emitBoard = (gameObj) => {
-	//sends to sockets on front end
 	io.emit('draw board', gameObj.board)
 	return gameObj
 }

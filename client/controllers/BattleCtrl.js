@@ -146,6 +146,7 @@ battleship.controller('BattleCtrl', function($scope, $http, socket) {
 			`
 		}
 
+			//Starts game play, adds, game play listeners
 			$scope.startDemo = () => {
 				socket.emit('startDemo')
 				$scope.showBoats = false
@@ -170,7 +171,7 @@ battleship.controller('BattleCtrl', function($scope, $http, socket) {
 				})
 			}
 
-
+			//draws original, empty board
 		  $scope.createGame = () => {
 	      socket.emit('createGame')
 	      console.log(emptyBoard)
@@ -180,6 +181,7 @@ battleship.controller('BattleCtrl', function($scope, $http, socket) {
 	      $scope.hideNewButton = true
 	    }
 
+	    /***** Functionality for placing the ships *****/
 			const mouseOver = () => {
 				event.target.style.backgroundColor = "orange"
 			}
@@ -196,9 +198,7 @@ battleship.controller('BattleCtrl', function($scope, $http, socket) {
 				board_1.removeEventListener('click', dropShip)
 			}
 
-
 			chip.addEventListener('click', evt => {
-				//console.log('clicked chip:', evt.target.innerHTML)
 				let size = 0
 				let shipId = evt.target.id
 				console.log('ship id:', shipId)
@@ -223,9 +223,9 @@ battleship.controller('BattleCtrl', function($scope, $http, socket) {
 				board_1.addEventListener('mouseout', mouseOut)
 				board_1.addEventListener('click', dropShip)
 			})
-      
+     
+    //Listens for 'draw board', then draws using gameBoard obj from server 
 		socket.on('draw board', function (gameBoard) {
-			//console.log('socket obj:', gameBoard)
 			$scope.boardState = gameBoard
 			console.log("board array:", $scope.boardState)
 			drawBoard($scope.boardState)
