@@ -103,7 +103,7 @@ const placeShip = (location) => {
 			// return gameObj
 			//let gameId = gameObj._id
 			//gamePlay(gameObj)
-			gameObj.board[row][col] = `.`
+			gameObj.board[row][col] = ` `
 			//console.log('targeted box:', gameObj.board)
 			let updatedObj = {
 				board: gameObj.board,
@@ -140,15 +140,15 @@ const fireMissile = (target) => {
 			let target = gameObj.board[row][col]
 			console.log('target:', target)
 			//gameObj.board[row][col] = `x`
-			if (target === '.') {
-				gameObj.board[row][col] = 'X'
+			if (target === ' ') {
+				gameObj.board[row][col] = '🔴'
 				console.log('Target Hit')
 				//io.emit('hitTarget', target)
 				return gameObj
 				
 			}
 			else {
-				gameObj.board[row][col] = 'O'
+				gameObj.board[row][col] = '⚪️'
 				console.log('Target Missed')
 				//io.emit('missedTarget', target)
 				return gameObj
