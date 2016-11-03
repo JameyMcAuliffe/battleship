@@ -54,6 +54,13 @@ io.on('connection', socket => {
 		console.log('missile fired')
 		fireMissile(target)
 	})
+	socket.on('placeShip', location => {
+		console.log('ship placed')
+		placeShip(location)
+	})
+	// socket.on('startDemo', () => {
+		
+	// })
 })
 
 
@@ -73,6 +80,41 @@ const updateBoard = (gameObj) => {
 		// 	//console.log(updatedObj)
 		// 	return updatedObj
 		// })
+}
+
+//accepts target object containing col and row from placeShip emit event
+const placeShip = (location) => {
+	let col = location.col
+	let row = location.row
+	console.log('row:', row)
+	console.log('col:', col)
+	Game
+		.findById(globalGameId)
+		.then(gameObj => {
+			// console.log('gameId:', gameObj._id)
+			// return gameObj
+			//let gameId = gameObj._id
+			//gamePlay(gameObj)
+			gameObj.board[row][col] = `.`
+			//console.log('targeted box:', gameObj.board)
+			let updatedObj = {
+				board: gameObj.board,
+				id: gameObj._id
+			}
+			return updatedObj
+		})
+		.then(updatedObj => {
+			updateBoard(updatedObj)
+			return updatedObj
+		})
+		.then(updatedObj => {
+			emitBoard(updatedObj)
+			//console.log('emit obj:', updatedObj)
+		})
+}
+
+const startDemo = (updatedObj) => {
+	emitBoard(updatedObj)
 }
 
 //accepts target object containing col and row from fire missile emit event
@@ -106,16 +148,29 @@ const fireMissile = (target) => {
 		})
 }
 
-function gamePlay(gameObj) {
-	console.log('current game board:', gameObj._id)
-}
-
 
 const emitBoard = (gameObj) => {
 	//sends to sockets on front end
 	io.emit('draw board', gameObj.board)
 	return gameObj
 }
+
+
+
+
+
+
+
+
+
+
+
+
+/************************ FULL GAME FUNCTIONALITY ***************************/
+
+// function gamePlay(gameObj) {
+// 	console.log('current game board:', gameObj._id)
+// }
 
  //const createShips = () => {
 // 	Ships.create({

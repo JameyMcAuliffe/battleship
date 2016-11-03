@@ -154,6 +154,26 @@ battleship.controller('BattleCtrl', function($scope, $http, socket) {
 			//   socket.emit('fireMissile', { row, col })	  
 			// })
 
+			$scope.startDemo = () => {
+				//socket.emit('startDemo')
+				board_1.addEventListener('click', evt => {
+				  let col = evt.target.closest('td').cellIndex
+				  let row = evt.target.closest('tr').rowIndex
+				  console.log("clicked on row: ", row);
+				  console.log("clicked on col: ", col);
+				  socket.emit('fireMissile', { row, col })	  
+				})
+			}
+
+		  $scope.createGame = () => {
+	      socket.emit('createGame')
+	      console.log(emptyBoard)
+	      drawBoard(emptyBoard)
+	      $scope.showBoats = true
+	      $scope.showDemoButton = true
+	      $scope.hideNewButton = true
+	    }
+
 			const mouseOver = () => {
 				event.target.style.backgroundColor = "orange"
 			}
@@ -161,7 +181,10 @@ battleship.controller('BattleCtrl', function($scope, $http, socket) {
 				event.target.style.backgroundColor = "lightblue"
 			}
 			const dropShip = () => {
-				event.target.style.backgroundColor = "gray"
+				event.target.style.backgroundColor = "blue"
+				let col = event.target.closest('td').cellIndex
+			  let row = event.target.closest('tr').rowIndex
+				socket.emit('placeShip', { row, col })
 				board_1.removeEventListener('mouseover', mouseOver)
 				board_1.removeEventListener('mouseout', mouseOut)
 				board_1.removeEventListener('click', dropShip)
@@ -208,14 +231,6 @@ battleship.controller('BattleCtrl', function($scope, $http, socket) {
 	 //    console.log('chip:', chip)
   // 	});
 
-		
-
-	  $scope.createGame = () => {
-      socket.emit('createGame')
-      console.log(emptyBoard)
-      drawBoard(emptyBoard)
-      $scope.showBoats = true
-    }
 
     //functions called on ngDraggable events
     // $scope.onDragComplete=function(data,evt){
