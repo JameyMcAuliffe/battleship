@@ -25,6 +25,10 @@ const battleship = angular
 				controller: 'BattleCtrl',
 				templateUrl: 'partials/battle.html'
 			})
+			.when('/profile', {
+				controller: 'ProfileCtrl',
+				templateUrl: 'partials/profile.html'
+			})
 	)
 	
 	const socket = io()
