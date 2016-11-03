@@ -167,25 +167,29 @@ battleship.controller('BattleCtrl', function($scope, $http, socket) {
 				board_1.removeEventListener('click', dropShip)
 			}
 
+			// const removeFromShipsArray = (index) => {
+			// 	shipsArray.splice(index, 1)
+			// }
 
 
 			chip.addEventListener('click', evt => {
-				console.log('clicked chip:', evt.target.innerHTML)
+				//console.log('clicked chip:', evt.target.innerHTML)
 				let size = 0
-				let shipName = evt.target.innerHTML
-				if (shipName === 'Carrier') {
+				let shipId = evt.target.id
+				console.log('ship id:', shipId)
+				if (shipId === 'carrier') {
 					size = 5
 				}
-				else if (shipName === 'Battleship') {
+				else if (shipId === 'battleship') {
 					size = 4
 				}
-				else if (shipName === 'Submarine') {
+				else if (shipId === 'submarine') {
 					size = 3
 				}
-				else if (shipName === 'Cruiser') {
+				else if (shipId === 'cruiser') {
 					size = 3
 				}
-				else if (shipName === 'Destroyer') {
+				else if (shipId === 'destroyer') {
 					size = 2
 				}
 				console.log('ship size:', size)
