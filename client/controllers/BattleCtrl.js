@@ -155,7 +155,7 @@ battleship.controller('BattleCtrl', function($scope, $http, socket) {
 			// })
 
 			$scope.startDemo = () => {
-				//socket.emit('startDemo')
+				socket.emit('startDemo')
 				$scope.showBoats = false
 				board_1.addEventListener('click', evt => {
 				  let col = evt.target.closest('td').cellIndex
