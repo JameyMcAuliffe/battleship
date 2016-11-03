@@ -1,5 +1,4 @@
-<h1>Battleship</h1>
-<h2>Battle Partial</h2>
+<h1>Battleboat</h1>
 <div class="row">
 	<div class="col s2">
 		<form ng-hide="hideNewButton" ng-submit="createGame()">
@@ -16,8 +15,6 @@
 <div class="row">
 	<div ng-show="showBoats">
 		<ul class="ships">
-			<!-- <li ng-drag="true" ng-drag-data="{obj}" ng-drag-success="onDragComplete($data,$event)" ng-center-anchor="true" class="chip" ng-repeat="ship in shipsArray">{{ship.name}}</li> -->
-				<!-- <li ng-repeat="ship in shipsArray" class="chip" dragula-model="shipsArray">{{ship.name}}</li> -->
 			<li class="chip" id="carrier">Carrier</li>
 			<li class="chip" id="battleship">Battleship</li>
 			<li class="chip" id="submarine">Submarine</li>
@@ -26,13 +23,6 @@
 		</ul>
 	</div>
 </div>
-<!-- <div class="row">
-	<div class="wrapper">
-		<div class="container" dragula='"bag-1"' dragula-model="shipsArray">
-			<div ng-repeat="ship in shipsArray" class="chip">{{ship.name}}</div>
-		</div>
-	</div>
-</div> -->
 <h5>{{msg}}</h5>
 <div class="row">
 	<div class="board_1"></div>
