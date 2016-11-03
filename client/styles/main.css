@@ -1,3 +1,11 @@
+body {
+  display: flex;
+  min-height: 120vh;
+  flex-direction: column;
+}
+
+
+
 td {
 	border: 1px solid blue;
 	text-align: center;
