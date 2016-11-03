@@ -58,9 +58,6 @@ io.on('connection', socket => {
 		console.log('ship placed')
 		placeShip(location)
 	})
-	// socket.on('startDemo', () => {
-		
-	// })
 })
 
 
@@ -129,8 +126,14 @@ const fireMissile = (target) => {
 			// console.log('gameId:', gameObj._id)
 			// return gameObj
 			//let gameId = gameObj._id
-			//gamePlay(gameObj)
-			gameObj.board[row][col] = `x`
+			let target = gameObj.board[row][col]
+			//gameObj.board[row][col] = `x`
+			if (target === '.') {
+				console.log('Target Hit')
+			}
+			else {
+				console.log('Target Missed')
+			}
 			//console.log('targeted box:', gameObj.board)
 			let updatedObj = {
 				board: gameObj.board,
