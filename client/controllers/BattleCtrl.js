@@ -153,7 +153,7 @@ battleship.controller('BattleCtrl', function($scope, $http, socket) {
 				$scope.showBoats = false
 				$scope.showDemoButton = false
 	      $scope.hideNewButton = false
-	      $scope.msg = ''
+	      $scope.msg = 'DESTROY ALL SHIPS'
 				board_1.addEventListener('click', evt => {
 				  let col = evt.target.closest('td').cellIndex
 				  let row = evt.target.closest('tr').rowIndex
@@ -162,13 +162,17 @@ battleship.controller('BattleCtrl', function($scope, $http, socket) {
 				  socket.emit('fireMissile', { row, col }) 
 				})
 				socket.on('hitTarget', () => {
-					$scope.msg = 'Direct hit, you are super'
+					let msgArray = [':nailedit:', 'Ship go boom', 'POW', 'Murica', "I see you've played knifey spoony before"]
+					let index = Math.floor(Math.random() * 5)
+					$scope.msg = msgArray[index]
 				})
 				socket.on('missedTarget', () => {
-					$scope.msg = 'Try hitting the ships, nerd'
+					let msgArray = ['Try hitting the ships instead', "You'll never be the head of a major coporation", 'You are bad and you should feel bad']
+					let index = Math.floor(Math.random() * 3)
+					$scope.msg = msgArray[index]
 				})
 				socket.on('previousTarget', () => {
-					$scope.msg = 'Try somewhere new'
+					$scope.msg = 'You should probably stop clicking here'
 				})
 			}
 
@@ -181,6 +185,7 @@ battleship.controller('BattleCtrl', function($scope, $http, socket) {
 	      $scope.showBoats = true
 	      $scope.showDemoButton = true
 	      $scope.hideNewButton = true
+	      $scope.msg = 'Click a ship tag, then click a box to place it'
 	    }
 
 	    /***** Functionality for placing the ships *****/
