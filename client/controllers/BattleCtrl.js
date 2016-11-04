@@ -3,6 +3,7 @@
 battleship.controller('BattleCtrl', function($scope, $http, socket) {
 		const board_1 = document.querySelector('.board_1')
 		const chip = document.querySelector('.ships')
+		const battleDiv = document.querySelector('.battle')
 		
 
 		const emptyBoard = [
@@ -174,6 +175,7 @@ battleship.controller('BattleCtrl', function($scope, $http, socket) {
 			//draws original, empty board
 		  $scope.createGame = () => {
 	      socket.emit('createGame')
+	      battleDiv.style.backgroundColor = "darkblue" 
 	      console.log(emptyBoard)
 	      drawBoard(emptyBoard)
 	      $scope.showBoats = true
