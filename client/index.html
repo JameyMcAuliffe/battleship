@@ -5,22 +5,26 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>Battleboat</title>
 	<link rel="stylesheet" href="/lib/materialize/dist/css/materialize.min.css">
-	<link rel="stylesheet" href="/lib/angular-dragula/dist/dragula.min.css">
-	<link rel="stylesheet" href="./styles/main.css"
+	<link rel="stylesheet" href="./styles/main.css">
 </head>
 <body>
-	<div class="container">
+	<!-- <div class="container"> -->
 		<div ng-app="battleship">
-			<!-- <div ng-include="'./partials/navBar.html'"></div> -->
-			<div ng-view></div>
+			<div ng-include="'./partials/navBar.html'"></div>
+			<div class = "container" ng-view></div>
 		</div>
-	</div>
+	<!-- </div> -->
 	<script src="/lib/jquery/dist/jquery.min.js"></script>
 	<script src="/lib/angular/angular.min.js"></script>
 	<script src="/lib/angular-route/angular-route.min.js"></script>
 	<script src="/lib/socket.io-client/socket.io.js"></script>
-	<!-- <script src="/lib/ngDraggable/ngDraggable.js"></script> -->
-	<!-- <script src="/lib/angular-dragula/dist/angular-dragula.min.js"></script> -->
+	
+	<!-- Materialize: jQuery (necessary for Materialize's JavaScript plugins) -->
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
+  <!-- Materialize: Latest compiled and minified JavaScript -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
+
+  <!-- APP FIRST -->
 	<script src="/app/main.js"></script>
 
 	<!-- FACTORIES SECOND -->
