@@ -81,6 +81,17 @@ const updateBoard = (gameObj) => {
 		})
 }
 
+const checkShips = (numShips) => {
+	if(numShips == 0) {
+		// drawBoard({})
+		console.log('game over')
+	}
+	else {
+		numShips--
+		console.log('numShips:', numShips)
+	}
+}
+
 //accepts target object containing col and row from placeShip emit event
 const placeShip = (location) => {
 	let col = location.col
