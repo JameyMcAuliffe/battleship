@@ -4,6 +4,7 @@ battleship.controller('BattleCtrl', function($scope, $http, socket) {
 		const board_1 = document.querySelector('.board_1')
 		const chip = document.querySelector('.ships')
 		const battleDiv = document.querySelector('.battle')
+		let numShips = 0
 		
 
 		const emptyBoard = [
@@ -162,13 +163,21 @@ battleship.controller('BattleCtrl', function($scope, $http, socket) {
 				  socket.emit('fireMissile', { row, col }) 
 				})
 				socket.on('hitTarget', () => {
-					let msgArray = [':nailedit:', 'Ship go boom', 'POW', 'Murica', "I see you've played knifey spoony before"]
-					let index = Math.floor(Math.random() * 5)
+					let msgArray = [':nailedit:', 'Ship go boom', 'Murica', "I see you've played knifey spoony before"]
+					let index = Math.floor(Math.random() * 4)
 					$scope.msg = msgArray[index]
+					if(numShips <= 1) {
+						console.log('Game Over')
+						$scope.msg ='Hey you sunk all the ships...use your new skill wisely'
+					}
+					else {
+						numShips--
+						console.log('numShips:', numShips)
+					}
 				})
 				socket.on('missedTarget', () => {
-					let msgArray = ['Try hitting the ships instead', "You'll never be the head of a major coporation", 'You are bad and you should feel bad']
-					let index = Math.floor(Math.random() * 3)
+					let msgArray = ['Try hitting the ships instead', "You'll never be the head of a major coporation", 'You are bad and you should feel bad', 'You must play for the Titans or something', "It's called Battleboat, not Battlewater *swish*"]
+					let index = Math.floor(Math.random() * 5)
 					$scope.msg = msgArray[index]
 				})
 				socket.on('previousTarget', () => {
@@ -197,12 +206,15 @@ battleship.controller('BattleCtrl', function($scope, $http, socket) {
 			}
 			const dropShip = () => {
 				event.target.style.backgroundColor = "blue"
+				numShips++
+				console.log('numShips:', numShips)
 				let col = event.target.closest('td').cellIndex
 			  let row = event.target.closest('tr').rowIndex
 				socket.emit('placeShip', { row, col })
 				board_1.removeEventListener('mouseover', mouseOver)
 				board_1.removeEventListener('mouseout', mouseOut)
 				board_1.removeEventListener('click', dropShip)
+				return numShips
 			}
 
 			chip.addEventListener('click', evt => {
