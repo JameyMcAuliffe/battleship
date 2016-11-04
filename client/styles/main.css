@@ -6,12 +6,61 @@
 } */
 
 .nav-wrapper {
-	font-size: 115%;
-	padding-left: 10px;
+	font-size: 150%;
+	padding-left: 20px;
+	padding-right: 20px;
 }
 
-.splash {
+.app-title {
+	margin-top: 100px;
+	/*text-shadow: 2px 2px black;*/
+	font-weight: bold;
+	font-size: 100px;
+  background: -webkit-linear-gradient(yellow, red);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.msg {
+	margin-top: -20px;
+	background: -webkit-linear-gradient(yellow, red);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.battle-buttons-1 {
+	margin-top: 50px;
+}
+
+.battle-buttons-2 {
+	display: inline;
+}
+
+.cancel {
+	margin-top: 15px;
+}
+
+.splash,
+.battle {
 	text-align: center;
+	margin-top: -30px;
+}
+
+.ships {
+	display: flex;
+	justify-content: center;
+}
+
+.board_1 {
+	display: flex;
+	justify-content: center;
+	margin-bottom: 20px;
+	width: 500px;
+}
+
+.board-div {
+	display: flex;
+	justify-content: center
 }
 
 body {
@@ -21,7 +70,7 @@ body {
   background: url("../img/tg-2.jpeg");
   background-size: cover;
 	min-width: 100% !important;
-	position: absolute; 
+	position: absolute;
 }
 
 
@@ -40,17 +89,17 @@ td {
 	max-width: 75px;
 	min-height: 75px;
 	min-width: 75px;*/
-	width: 75px;
-	height: 75px;
+	width: 50px;
+	height: 50px;
 	overflow: none;
 	background-color: lightblue;
 }
 
 table {
-	max-width: 750px !important;
-	min-width: 750px;
-	max-height: 750px !important;
-	min-height: 750px;
+	max-width: 500px !important;
+	min-width: 500px;
+	max-height: 500px !important;
+	min-height: 500px;
 	padding: 0px;
 	margin: 0px;
 	overflow: none;

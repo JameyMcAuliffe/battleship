@@ -1,31 +1,35 @@
-<h1>Battleboat</h1>
 <div class="row">
-	<div class="col s2">
-		<form ng-hide="hideNewButton" ng-submit="createGame()">
-				<button ng-submit="createGame()" class="btn waves-effect waves-light" type="submit" name="action">New Game</button>
-		</form>
-		<form ng-show="showDemoButton" ng-submit="startDemo()">
-				<button ng-submit="startDemo()" class="btn waves-effect waves-light" type="submit" name="action">Start Demo</button>
-		</form>
-	</div>
-	<div class="col s2">
-		<a href="/#/" class="waves-effect waves-light btn">Cancel</a>
+	<div class="battle">
+		<div class="row battle-buttons-1">
+			<form ng-hide="hideNewButton" ng-submit="createGame()">
+					<button ng-submit="createGame()" class="btn waves-effect waves-light orange darken-3" type="submit" name="action">New Game</button>
+			</form>
+			<div class="row">
+				<a href="/#/" class="waves-effect waves-light btn orange darken-4 cancel" ng-hide="hideNewButton">Cancel</a>
+			</div>
+		</div>
+		<div class="battle-buttons-2">
+			<form ng-show="showDemoButton" ng-submit="startDemo()">
+				<button ng-submit="startDemo()" class="btn waves-effect waves-light orange darken-3" type="submit" name="action">Start</button>
+			</form>
+		</div>
+		<div class="row">
+			<div ng-show="showBoats">
+				<ul class="ships">
+					<li class="chip" id="carrier">Carrier</li>
+					<li class="chip" id="battleship">Battleship</li>
+					<li class="chip" id="submarine">Submarine</li>
+					<li class="chip" id="cruiser">Cruiser</li>
+					<li class="chip" id="destroyer">Destroyer</li>
+				</ul>
+			</div>
+		</div>
+		<h5 class="msg">{{msg}}</h5>
+		<div class="row board-div">
+			<div class="board_1"></div>
+		</div>
 	</div>
 </div>
-<div class="row">
-	<div ng-show="showBoats">
-		<ul class="ships">
-			<li class="chip" id="carrier">Carrier</li>
-			<li class="chip" id="battleship">Battleship</li>
-			<li class="chip" id="submarine">Submarine</li>
-			<li class="chip" id="cruiser">Cruiser</li>
-			<li class="chip" id="destroyer">Destroyer</li>
-		</ul>
-	</div>
-</div>
-<h5>{{msg}}</h5>
-<div class="row">
-	<div class="board_1"></div>
-</div>
+
 
 
